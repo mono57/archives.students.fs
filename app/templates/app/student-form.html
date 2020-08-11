@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}
+  Ajouter un nouvel étudiant
+{% endblock title %}
+
+{% block breadcrumbs %}
+{{ block.super }}
+  <li class="breadcrumb-item active">
+    nouvel étudiant
+  </li>
+{% endblock breadcrumbs %}
+
+{% block content %}
+  <div class="row mt-4">
+    <div class="col-8">
+      <form method="post">
+  
+          {% csrf_token %}
+      
+          <div class="form-row">
+              <div class="form-group mb-0 col">
+                {{form.serial_number|as_crispy_field}}
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group mb-0 col-md-6">
+                {{form.last_name|as_crispy_field}}
+              </div>
+              <div class="form-group mb-0 col-md-6">
+                {{form.first_name|as_crispy_field}}
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group mb-0 col-md-6">
+                {{form.date_of_birth|as_crispy_field}}
+              </div>
+              <div class="form-group mb-0 col-md-6">
+                {{form.place_of_birth|as_crispy_field}}
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group mb-0 col-md-6">
+                {{form.region_of_origin|as_crispy_field}}
+              </div>
+              <div class="form-group mb-0 col-md-6">
+                {{form.gender|as_crispy_field}}
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group mb-0 col">
+                {{form.nationality|as_crispy_field}}
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group mb-0 col-md-6">
+                {{form.father_name|as_crispy_field}}
+              </div>
+              <div class="form-group mb-0 col-md-6">
+                {{form.mother_name|as_crispy_field}}
+              </div>
+            </div>
+      
+            <button class="btn btn-primary btn-sm">Enregister l'étudiant</button>
+        </form>
+    </div>
+  </div>
+{% endblock content %}

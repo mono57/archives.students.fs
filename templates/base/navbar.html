@@ -1,0 +1,57 @@
+<header class="navbar navbar-header navbar-header-fixed">
+    <!-- <a href="#" id="sidebarMenuOpen" class="burger-menu"><i data-feather="arrow-left"></i></a>
+    <div class="navbar-brand">
+      <a href="../index.html" class="df-logo">dash<span>forge</span></a>
+    </div> -->
+    <div id="navbarMenu" class="navbar-menu-wrapper">
+      
+      <ul class="nav navbar-menu">
+        
+        <li class="nav-item with-sub">
+          <a href="#" class="nav-link"><i data-feather="layers"></i> Departements</a>
+          <div class="navbar-menu-sub">
+            <div class="d-lg-flex">
+             {% for department in departments %}
+             <ul>
+              <li class="nav-label">{{department.name}}</li>              
+              {% for course in department.course_of_studies.all %}
+              <li class="nav-sub-item"><a href="#" class="nav-sub-link">{{course.name}}</a></li>
+                
+              {% endfor %}
+            </ul>
+             {% endfor %}
+              
+            </div>
+          </div>
+        
+        </li>
+        
+        <ul class="nav ml-auto">
+          <li class="nav-item">
+            <form class="form-inline" method="GET" action="">
+  
+              <div class="form-group mx-sm-3 mb-2">
+                <label for="search" class="sr-only">Search</label>
+                <input type="text" name="serial_number" class="form-control-sm" id="search" placeholder="Entrez le matricule">
+              </div>
+              <button type="submit" class="btn btn-primary btn-sm mb-2">Rechercher</button>
+            </form>
+          </li>
+          <li class="nav-item">
+            {% if not request.user.is_authenticated %}
+            <a href="{% url 'accounts:login' %}" class="btn btn-primary btn-sm">Se connecter</a>
+              {% else %}
+            <a href="{% url 'accounts:logout' %}" class="btn btn-danger btn-sm">Se deconnecter </a>
+  
+            {% endif %}
+          </li>
+        </ul>
+        </ul>
+    </div>
+    <!-- <div class="navbar-right">
+      <a href="http://dribbble.com/themepixels" class="btn btn-social"><i class="fab fa-dribbble"></i></a>
+      <a href="https://github.com/themepixels" class="btn btn-social"><i class="fab fa-github"></i></a>
+      <a href="https://twitter.com/themepixels" class="btn btn-social"><i class="fab fa-twitter"></i></a>
+      <a href="https://themeforest.net/item/dashforge-responsive-admin-dashboard-template/23725961" class="btn btn-buy"><i data-feather="shopping-bag"></i> <span>Buy Now</span></a>
+    </div> -->
+  </header>

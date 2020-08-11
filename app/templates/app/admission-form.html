@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}
+Formulaire enregistrement
+{% endblock title %}
+
+{% block breadcrumbs %}
+  {{ block.super }}
+  <li class="breadcrumb-item">
+    <a href="{{student.get_absolute_url}}">{{student.get_full_name}}</a>
+  </li>
+  <li class="breadcrumb-item active">
+    Nouvelle fiche d'inscription
+  </li>
+{% endblock breadcrumbs %}
+
+{% block content %}
+  <div class="row mt-4">
+    <div class="col-lg-6">
+      <!-- <h4>Etape: {{wizard.steps.step1}}</h4> -->
+      <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <!-- {{ wizard.form.media }} -->
+        
+      {{form|crispy}}
+        
+        <!-- {{wizard.management_form}}
+        {% if wizard.form.forms %}
+        {{ wizard.form.management_form }}
+        {% for form in wizard.form.forms %}
+        {{ form }}
+        {% endfor %}
+        {% else %}
+        {{ wizard.form }}
+        {% endif %} -->
+       
+          <button class="btn btn-primary btn-sm ml-auto" type='submit'>Enregistrer l'étudiant</button>
+      </form>
+
+    </div>
+</div>
+{% endblock content %}

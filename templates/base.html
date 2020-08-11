@@ -1,0 +1,84 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>
+
+    {% block title %}
+
+    {% endblock title %} - FS | UNIV-NDERE
+
+  </title>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'lib/fortawesome/css/all.min.css' %}">
+
+
+  <link rel="stylesheet" href="{% static 'css/dashforge.filemgr.css' %}">
+  <link rel="stylesheet" href="{% static 'css/dashforge.css' %}">
+  <link rel="stylesheet" href="{% static 'css/dashforge.demo.css' %}">
+  <!-- <link rel="stylesheet" href="{% static 'css/app.css' %}"> -->
+
+
+</head>
+
+<body class="app-filemgr">
+
+  {% include "base/navbar.html" %}
+  <div class="content content-components">
+    <div class="container">
+      <!-- <div class="row">
+        <div class="col-12" style="width: 100%;">
+        
+        </div>
+      </div> -->
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb-style1 mg-b-0">
+          {% block breadcrumbs %}
+
+
+          <li class="breadcrumb-item {% if request.path == '/' %}
+                      active
+                      {% endif %}"><a href="/">Accueil</a></li>
+
+          {% endblock breadcrumbs %}
+        </ol>
+      </nav>
+      {% block content %}
+
+      {% endblock content %}
+
+
+
+      <!-- <footer class="content-footer">
+            <div>
+              <span>&copy; 2019 DashForge v1.0.0. </span>
+              <span>Made by <a href="http://themepixels.me/">ThemePixels</a></span>
+            </div>
+            <div>
+              <nav class="nav">
+                <a href="https://themeforest.net/licenses/standard" class="nav-link">Licenses</a>
+                <a href="../change-log.html" class="nav-link">Change Log</a>
+                <a href="https://discordapp.com/invite/RYqkVuw" class="nav-link">Get Help</a>
+              </nav>
+            </div>
+          </footer>
+       -->
+    </div>
+  </div>
+
+  <script src="{% static 'js/jquery-3.5.1.min.js' %}"></script>
+  <!-- <script src="{% static 'js/popper.min.js' %}"></script> -->
+  <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'lib/feather-icons/feather.min.js' %}"></script>
+  <script src="{% static 'js/perfect-scrollbar.min.js' %}"></script>
+
+  <script src="{% static 'js/dashforge.filemgr.js' %}"></script>
+  <script src="{% static 'js/dashforge.js' %}"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+
+
+{% block content %}
+<div class="filemgr-wrapper">
+  <div class="filemgr-sidebar">
+    <div class="filemgr-sidebar-header">
+      
+      <div class="dropdown dropdown-icon flex-fill mg-l-10">
+        <button class="btn btn-xs btn-block btn-primary" data-toggle="dropdown">Ajouter <i
+            data-feather="chevron-down"></i></button>
+        <div class="dropdown-menu tx-13">
+          <a href="#" class="dropdown-item"><i data-feather="file"></i><span>Nouvel étudiant</span></a>
+          <a href="#" class="dropdown-item"><i data-feather="folder"></i><span>Fiche d'admission</span></a>
+        </div><!-- dropdown-menu -->
+      </div><!-- dropdown -->
+    </div><!-- filemgr-sidebar-header -->
+    <div class="filemgr-sidebar-body">
+      {% for department in departments %}
+      <div class="pd-t-20 pd-b-10 pd-x-10">
+        <label class="tx-sans tx-uppercase tx-medium tx-10 tx-spacing-1 tx-color-03 pd-l-10">{{department.name}}</label>
+        {% if department.has_course_of_studies %}
+        <nav class="nav nav-sidebar tx-13">
+          {% for course in department.course_of_studies.all %}
+          <a href="#" class="nav-link"><i data-feather="folder"></i> <span>{{course.name}}</span></a>
+
+          {% endfor %}
+        </nav>
+        {% endif %}
+      </div>
+      {% endfor %}
+
+    </div><!-- filemgr-sidebar-body -->
+  </div><!-- filemgr-sidebar -->
+
+  <div class="filemgr-content">
+    <div class="filemgr-content-header">
+      <i data-feather="search"></i>
+      <div class="search-form">
+        <input type="search" class="form-control" placeholder="Entrez le matricule">
+      </div>
+      <nav class="nav d-none d-sm-flex mg-l-auto">
+        <a href="#" class="nav-link"><i data-feather="list"></i></a>
+        <a href="#" class="nav-link"><i data-feather="alert-circle"></i></a>
+        <a href="#" class="nav-link"><i data-feather="settings"></i></a>
+      </nav>
+    </div>
+    <div class="filemgr-content-body">
+      <div class="pd-t-20 pd-b-10 pd-x-10">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb breadcrumb-style3 mg-b-0">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+    <li class="breadcrumb-item"><a href="#">Library</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Data</li>
+          </ol>
+        </nav>
+        {% block content-body %}
+
+        {% endblock content-body %}
+        <!-- filemgr-content-body -->
+      </div><!-- filemgr-content -->
+    </div>
+
+  </div>
+  {% endblock content %}
