@@ -65,4 +65,4 @@ class SuplementInfoModelForm(forms.ModelForm):
 class AdmissionForm(forms.ModelForm):
     class Meta:
         model = AdmissionFile
-        exclude = ('student',)
+        exclude = ('student', 'name', 'ext', 'size')

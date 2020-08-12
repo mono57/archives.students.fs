@@ -8,6 +8,6 @@ class HomeTemplateView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['recent-document'] = []
+        context['recent_documents'] = []
         context['recent_students'] = Student.objects.get_recents()
         return context

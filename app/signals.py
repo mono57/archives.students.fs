@@ -1,7 +1,8 @@
 from django.db.models.signals import post_save
+
 import uuid
 
-from app.models import Student
+from app.models import Student, AdmissionFile
 
 def post_save_student_gen_uid(sender, instance, created, **kwargs):
     if created and not instance.uid:
@@ -10,3 +11,4 @@ def post_save_student_gen_uid(sender, instance, created, **kwargs):
 
 
 post_save.connect(post_save_student_gen_uid, sender=Student)
+

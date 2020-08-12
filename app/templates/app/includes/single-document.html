@@ -1,5 +1,5 @@
 {% load humanize %}
-
+{% load sizify %}
 <div class="card card-file">
   <div class="dropdown-file">
     <a href="#" class="dropdown-link" data-toggle="dropdown"><i data-feather="more-vertical"></i></a>
@@ -11,11 +11,11 @@
     </div>
   </div><!-- dropdown -->
   <div class="card-file-thumb tx-danger">
-    <i class="far fa-file-pdf"></i>
+    <i class="far fa-file"></i>
   </div>
   <div class="card-body">
-    <h6><a href="#" class="link-02">{{item.file}}</a></h6>
-    <span>10.45kb</span>
+    <h6><a href="#" class="link-02">{{item.name}}</a></h6>
+    <span>{{item.file.size|sizify}}</span>
   </div>
-  <div class="card-footer"><span class="d-none d-sm-inline">Date d'ajout: </span>{{item.created_at|naturalday}}</div>
+  <div class="card-footer"><span class="d-none d-sm-inline">Date d'ajout: </span><span class="text-dark">{{item.created_at|naturalday}}</span></div>
 </div>

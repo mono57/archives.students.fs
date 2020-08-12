@@ -253,6 +253,14 @@ class AdmissionFile(TimeStampModel):
         upload_to='admission/', 
         verbose_name='Fiche d\'inscription'
     )
+    name = models.CharField(
+        max_length=255, 
+        verbose_name='Nom du fichier',
+    )
+    ext = models.CharField(
+        max_length=10,
+        verbose_name='Extension du fichier'
+    )
 
     def __str__(self):
         return 'Fiche : {}'.format(self.pk)

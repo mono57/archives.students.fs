@@ -126,6 +126,10 @@ class AdmissionFileCreateView(
 
     def form_valid(self, form):
         obj = form.save(commit=False)
+        file_str = str(obj.file)
+        file_splited = file_str.split('.')
+        obj.name = file_splited[0]
+        obj.ext = file_splited[1]
         obj.student = self.get_concern_object()
         obj.save()
         return super().form_valid(form)
