@@ -9,7 +9,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from formtools.wizard.views import SessionWizardView
 from app.models import *
 from app.forms import (
-    StudentModelForm, SuplementInfoModelForm, DocumentModelForm, AdmissionForm)
+    StudentModelForm, SuplementInfoModelForm, DocumentModelForm, AdmissionForm, DocumentFile)
 
 
 class StudentCreateView(
@@ -91,9 +91,15 @@ class DocumentCreateView(
     template_name = 'app/document-form.html'
     success_message = 'Document(s) ajouté(s)'
 
+    # def post(self, request, *args, **kwargs):
+    #     fiels 
+
     def form_valid(self, form):
         doc = form.save(commit=False)
-        print(doc)
+        doc.student = get_object_or_404(
+            Student, uid=self.kwargs.get('uid'))
+        doc.save()
+    
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):

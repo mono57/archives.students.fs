@@ -211,21 +211,41 @@ class Document(TimeStampModel):
         DocumentType,
         on_delete=models.CASCADE,
         related_name='documents')
-    level = models.ForeignKey(
-        Level,
+    # level = models.ForeignKey(
+    #     Level,
+    #     on_delete=models.CASCADE,
+    #     verbose_name='niveau')
+    semester = models.ForeignKey(
+        Semester,
         on_delete=models.CASCADE,
-        verbose_name='niveau')
-        
+        verbose_name='Semestre concerné'
+    )
     student = models.ForeignKey(
         Student,
         on_delete=models.CASCADE,
         verbose_name='Etudiant',
         related_name = 'documents'
     )
+    file = models.FileField(upload_to='documents/')
+    file_name = models.CharField(
+        max_length=150,
+        verbose_name='Nom du fichier'
+    )
 
+    @property
+    def name(self):
+        return self.file_name
+
+    def save(self):
+        self.file_name = str(self.file).split('.')[0]
+        super().save()
 
 class DocumentFile(TimeStampModel):
     file = models.FileField(upload_to='documents/', verbose_name='fichier')
+    name = models.CharField(
+        max_length=255,
+        verbose_name = 'Nom du fichier'
+    )
     ext = models.CharField(max_length=10, blank=True, verbose_name='extension')
     document = models.ForeignKey(
         Document,
@@ -236,6 +256,11 @@ class DocumentFile(TimeStampModel):
     def __str__(self):
         return 'Fichier: {}'.format(self.pk)
 
+    # def save(self):
+    #     strfile_splited = str(self.file).split('.')
+    #     self.name = strfile_splited[0]
+    #     self.ext = strfile_splited[1]
+    #     super().save()
 
 class AdmissionFile(TimeStampModel):
     level = models.ForeignKey(
