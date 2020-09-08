@@ -1,9 +1,11 @@
+
+
 <div class="media media-folder">
   <i data-feather="folder"></i>
   <div class="media-body">
     <h6><a href="{% url 'app:student-detail' uid=item.uid %}" class="link-02">{{item.serial_number}} -
         {{item.get_full_name}}</a></h6>
-    <span>2 fichiers</span>
+    <span>{{item.documents.count}} Document{{item.documents.count|pluralize}}</span>
   </div>
   <div class="dropdown-file">
     <a href="#" class="dropdown-link" data-toggle="dropdown"><i data-feather="more-vertical"></i></a>

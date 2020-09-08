@@ -7,7 +7,8 @@ from app.models import (
     BachelorAdmission, 
     Document,
     DocumentFile,
-    AdmissionFile
+    AdmissionFile,
+    VerbalProces
     )
 
 
@@ -61,6 +62,11 @@ class SuplementInfoModelForm(forms.ModelForm):
             'mother_occupation',
             'parents_address',
         )
+
+class VerbalProcesModelForm(forms.ModelForm):
+    class Meta:
+        model = VerbalProces
+        fields = '__all__'
 
 class AdmissionForm(forms.ModelForm):
     class Meta:

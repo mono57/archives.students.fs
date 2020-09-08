@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 
+{% load humanize %}
 
 {% block title %}
 App
@@ -7,26 +8,78 @@ App
 
 {% block content %}
 <div class="row">
-  <div class="col-12   d-flex ">
-    <a class="btn btn-primary btn-sm ml-auto" href="{% url 'app:student-add' %}">Ajouter un nouvel étudiant</a>
+  <div class="col-12 d-flex ">
+    <div class="ml-auto">
+      <a class="btn btn-primary btn-sm" href="{% url 'app:student-add' %}">Ajouter un nouvel étudiant</a>
+      <a class="btn btn-warning btn-sm ml-3" href="{% url 'app:proces' %}">Ajouter un procès verbal</a>
+
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12">
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-{{message.tags}}">
+      {{message}}
+    </div>
+    {% endfor %}
+    {% endif %}
   </div>
 </div>
 
 <section class="py-4">
-  <h4 class="mb-0">Nouvels étudiants</h4>
+  <h4 class="mb-0">Etudiants</h4>
   <hr class="mg-b-40">
   <div class="row tx-14">
     {% for student in recent_students %}
     <div class="col-sm-4 mb-4">
       {% include "app/includes/single-folder.html" with item=student %}
     </div>
-    
+
     {% empty %}
     <div class="col-12">
       <h5 class="text-center text-primary">Aucun nouvel étudiant</h5>
     </div>
     {% endfor %}
-    
+
+  </div>
+</section>
+
+<section class="py-4">
+  <h4 class="mb-0">Procès verbal</h4>
+  <hr class="mg-b-40 mt-0">
+  <div class="row tx-14">
+    {% for proces in verbal_proces %}
+    <div class="col-sm-4 mb-4">
+      <div class="card card-file">
+        <div class="dropdown-file">
+          <a href="#" class="dropdown-link" data-toggle="dropdown"><i data-feather="more-vertical"></i></a>
+          <div class="dropdown-menu dropdown-menu-right">
+            <a href="#modalViewDetails" data-toggle="modal" class="dropdown-item details"><i data-feather="info"></i>
+              Details</a>
+
+            <a href="#" class="dropdown-item delete"><i data-feather="trash"></i>Supprimer</a>
+          </div>
+        </div><!-- dropdown -->
+        <div class="card-file-thumb tx-danger">
+          <i class="far fa-file"></i>
+        </div>
+        <div class="card-body">
+          <h6><a href="#">Procès verbal: {{proces.level}} | {{proces.academic_year}}</a></h6>
+          <!-- <span>Taille du fichier: </span> -->
+        </div>
+        <div class="card-footer"><span class="d-none d-sm-inline">Date d'ajout: </span><span
+            class="text-dark">{{proces.created_at|naturalday}}</span></div>
+      </div>
+    </div>
+
+    {% empty %}
+    <div class="col-12">
+      <h5 class="text-center text-primary">Aucun procès verbal enregistré !</h5>
+    </div>
+    {% endfor %}
+
   </div>
 </section>
 

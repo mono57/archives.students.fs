@@ -9,7 +9,8 @@ from django.contrib.messages.views import SuccessMessageMixin
 from formtools.wizard.views import SessionWizardView
 from app.models import *
 from app.forms import (
-    StudentModelForm, SuplementInfoModelForm, DocumentModelForm, AdmissionForm, DocumentFile)
+    StudentModelForm, SuplementInfoModelForm, VerbalProcesModelForm,
+    DocumentModelForm, AdmissionForm, DocumentFile)
 
 
 class StudentCreateView(
@@ -27,12 +28,13 @@ class StudentDetailView(LoginRequiredMixin, DetailView):
     model = Student
     context_object_name = 'student'
 
-    def get_context_data(self, **kwargs):
-        ctx = super().get_context_data(**kwargs)
-        obj = self.get_object()
-        documents = [*obj.documents.all(), *obj.admissions.all()]
-        ctx['documents'] = documents
-        return ctx
+    # def get_context_data(self, **kwargs):
+    #     ctx = super().get_context_data(**kwargs)
+    #     obj = self.get_object()
+    #     documents = [*obj.documents.all(), *obj.admissions.all()]
+    #     ctx['documents'] = documents
+    #     print(documents)
+    #     return ctx
 
     def get_object(self):
         uid = self.kwargs.get('uid')
@@ -92,14 +94,19 @@ class DocumentCreateView(
     success_message = 'Document(s) ajouté(s)'
 
     # def post(self, request, *args, **kwargs):
-    #     fiels 
+    #     fiels
 
     def form_valid(self, form):
         doc = form.save(commit=False)
         doc.student = get_object_or_404(
             Student, uid=self.kwargs.get('uid'))
+        file_str = str(doc.file)
+        file_splited = file_str.split('.')
+        doc.file_name = file_splited[0]
+        print(file_splited[0])
+        doc.ext = file_splited[1]
         doc.save()
-    
+
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
@@ -118,7 +125,7 @@ class AdmissionFileCreateView(
         CreateView):
     form_class = AdmissionForm
     template_name = 'app/admission-form.html'
-    success_message = 'Fiche d\'admission ajoutée avec succès !'
+    success_message = 'Fiche d\'inscription ajoutée avec succès !'
 
     def get_concern_object(self):
         return get_object_or_404(
@@ -142,3 +149,10 @@ class AdmissionFileCreateView(
 
     def get_success_url(self):
         return self.get_concern_object().get_absolute_url()
+
+
+class VerbalProcesCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
+    form_class = VerbalProcesModelForm
+    template_name = 'app/verbal_proces-form.html'
+    success_url = reverse_lazy('home')
+    success_message = 'Procès verbal ajouté avec succès !'

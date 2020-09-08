@@ -14,8 +14,8 @@
     <i class="far fa-file"></i>
   </div>
   <div class="card-body">
-    <h6><a href="#" class="link-02">{{item.name}}</a></h6>
-    <span>{{item.file.size|sizify}}</span>
+    <h6><a href="{{item.file.url}}" class="link-02" target="blank" >{{item.type}} | {{item.semester}}</a></h6>
+    <span>Taille du fichier: {{item.file.size|sizify}}</span>
   </div>
   <div class="card-footer"><span class="d-none d-sm-inline">Date d'ajout: </span><span class="text-dark">{{item.created_at|naturalday}}</span></div>
 </div>

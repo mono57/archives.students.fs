@@ -224,7 +224,7 @@ class Document(TimeStampModel):
         Student,
         on_delete=models.CASCADE,
         verbose_name='Etudiant',
-        related_name = 'documents'
+        related_name='documents'
     )
     file = models.FileField(upload_to='documents/')
     file_name = models.CharField(
@@ -240,11 +240,12 @@ class Document(TimeStampModel):
         self.file_name = str(self.file).split('.')[0]
         super().save()
 
+
 class DocumentFile(TimeStampModel):
     file = models.FileField(upload_to='documents/', verbose_name='fichier')
     name = models.CharField(
         max_length=255,
-        verbose_name = 'Nom du fichier'
+        verbose_name='Nom du fichier'
     )
     ext = models.CharField(max_length=10, blank=True, verbose_name='extension')
     document = models.ForeignKey(
@@ -262,6 +263,21 @@ class DocumentFile(TimeStampModel):
     #     self.ext = strfile_splited[1]
     #     super().save()
 
+# class AcademicYear(TimeStampModel):
+#     start_date = models.CharField()
+
+
+class VerbalProces(TimeStampModel):
+    level = models.ForeignKey(
+        Level, on_delete=models.CASCADE, verbose_name='Niveau')
+    academic_year = models.CharField(
+        max_length=20, verbose_name='Année académique', help_text='2015/2016')
+
+    file = models.FileField(verbose_name='Fichier procès verbal', upload_to='proces/')
+
+    def __str__(self):
+        return '{} - {}'.format(self.level, self.academic_year)
+
 class AdmissionFile(TimeStampModel):
     level = models.ForeignKey(
         Level,
@@ -275,11 +291,11 @@ class AdmissionFile(TimeStampModel):
         related_name='admissions'
     )
     file = models.FileField(
-        upload_to='admission/', 
+        upload_to='admission/',
         verbose_name='Fiche d\'inscription'
     )
     name = models.CharField(
-        max_length=255, 
+        max_length=255,
         verbose_name='Nom du fichier',
     )
     ext = models.CharField(
@@ -289,3 +305,7 @@ class AdmissionFile(TimeStampModel):
 
     def __str__(self):
         return 'Fiche : {}'.format(self.pk)
+
+    # def save(self):
+    #     self.name = str(self.file).split('.')[0]
+    #     super().save()

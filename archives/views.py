@@ -10,4 +10,5 @@ class HomeTemplateView(LoginRequiredMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         context['recent_documents'] = []
         context['recent_students'] = Student.objects.get_recents()
+        context['verbal_proces'] = VerbalProces.objects.all()
         return context

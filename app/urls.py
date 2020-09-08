@@ -4,7 +4,8 @@ from app.views import (
     StudentCreateView,
     StudentDetailView,
     DocumentCreateView,
-    AdmissionFileCreateView
+    AdmissionFileCreateView,
+    VerbalProcesCreateView
 )
 
 app_name = 'app'
@@ -33,6 +34,11 @@ urlpatterns = [
         'student/<str:uid>/admisssion/form/',
         AdmissionFileCreateView.as_view(),
         name='admission-form'
+    ),
+    path(
+        'proces/',
+        VerbalProcesCreateView.as_view(),
+        name='proces'
     )
     
 ]

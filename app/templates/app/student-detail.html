@@ -1,5 +1,8 @@
 {% extends "base.html" %}
 
+{% load humanize %}
+{% load sizify %}
+
 {% block title %}
 {{student.serial_number}}
 {% endblock title %}
@@ -32,12 +35,12 @@
     </div>
   {% endfor %}
 {% endif %}
-<hr class="mg-y-40">
+<p class="mb-0 mt-5">Documents</p>
+<hr class="mg-y-40 mt-0">
 <div class="row">
 
 
-
-  {% for document in documents %}
+  {% for document in student.documents.all %}
   <div class="col-sm-4 mb-4">
     {% include "app/includes/single-document.html" with item=document %}
 
@@ -48,5 +51,32 @@
   </div>
   {% endfor %}
 
+</div>
+<p class="mb-0 mt-5">Fiches d'inscription</p>
+
+<hr class="mg-y-40 mt-0">
+<div class="row">
+{% for admission in student.admissions.all %}
+<div class="col-sm-4">
+  <div class="card card-file">
+    <div class="dropdown-file">
+      <a href="#" class="dropdown-link" data-toggle="dropdown"><i data-feather="more-vertical"></i></a>
+      <div class="dropdown-menu dropdown-menu-right">
+        <a href="#modalViewDetails" data-toggle="modal" class="dropdown-item details"><i data-feather="info"></i>
+          Details</a>
+  
+        <a href="#" class="dropdown-item delete"><i data-feather="trash"></i>Supprimer</a>
+      </div>
+    </div><!-- dropdown -->
+    <div class="card-file-thumb tx-danger">
+      <i class="far fa-file"></i>
+    </div>
+    <div class="card-body">
+      <h6><a href="{{item.file.url}}" class="link-02" target="blank" >Fiche d'inscription: {{admission.level}}</a></h6>
+    </div>
+    <div class="card-footer"><span class="d-none d-sm-inline">Date d'ajout: </span><span class="text-dark">{{admission.created_at|naturalday}}</span></div>
+  </div>
+</div>
+{% endfor %}
 </div>
 {% endblock content %}
