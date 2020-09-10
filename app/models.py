@@ -30,6 +30,9 @@ class Level(TimeStampModel):
     def __str__(self):
         return self.short_name
 
+    class Meta:
+        verbose_name = 'Niveau'
+        verbose_name_plural = 'Niveaux'
 
 class Student(TimeStampModel):
     uid = models.UUIDField(blank=True, default=uuid.uuid4())
@@ -64,6 +67,12 @@ class Student(TimeStampModel):
         return self.first_name + ' ' + self.last_name
 
 
+    class Meta:
+        verbose_name = 'Etudiant'
+        verbose_name_plural = 'Etudiants'
+        
+
+
 class Department(CommonModel):
     class Meta:
         verbose_name = 'Departement'
@@ -79,7 +88,12 @@ class CourseOfStudy(CommonModel):
         on_delete=models.CASCADE,
         related_name='course_of_studies'
     )
-
+    student = models.ManyToManyField(
+        Student,
+        blank=True,
+        related_name='courses_of_studies',
+        verbose_name='Etudiants'
+    )
     class Meta:
         verbose_name = 'Parcours'
         verbose_name_plural = 'Parcours'
@@ -189,6 +203,9 @@ class Folder(TimeStampModel):
         verbose_name='Nom du dossier'
     )
 
+    class Meta:
+        verbose_name = 'Dossier étudiant'
+        verbose_name_plural = 'Dossiers étudiant'
 
 class Semester(TimeStampModel):
     number = models.IntegerField(
@@ -198,6 +215,10 @@ class Semester(TimeStampModel):
     def __str__(self):
         return 'Semestre: {}'.format(self.number)
 
+    class Meta:
+        verbose_name = 'Semestre'
+        verbose_name_plural = 'Semestres'
+
 
 class DocumentType(TimeStampModel):
     name = models.CharField(max_length=255, verbose_name='Nom')
@@ -205,6 +226,9 @@ class DocumentType(TimeStampModel):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name = 'Type du document'
+        verbose_name_plural = 'Types du document'
 
 class Document(TimeStampModel):
     type = models.ForeignKey(
@@ -241,6 +265,10 @@ class Document(TimeStampModel):
         super().save()
 
 
+    class Meta:
+        verbose_name = 'Document'
+        verbose_name_plural = 'Documents'
+
 class DocumentFile(TimeStampModel):
     file = models.FileField(upload_to='documents/', verbose_name='fichier')
     name = models.CharField(
@@ -256,6 +284,10 @@ class DocumentFile(TimeStampModel):
 
     def __str__(self):
         return 'Fichier: {}'.format(self.pk)
+
+    class Meta:
+        verbose_name = 'Fichier du document'
+        verbose_name_plural = 'Fichiers du document'
 
     # def save(self):
     #     strfile_splited = str(self.file).split('.')
@@ -277,6 +309,11 @@ class VerbalProces(TimeStampModel):
 
     def __str__(self):
         return '{} - {}'.format(self.level, self.academic_year)
+
+    class Meta:
+        verbose_name = 'Procès verbal'
+        verbose_name_plural = 'Procès verbaux'
+
 
 class AdmissionFile(TimeStampModel):
     level = models.ForeignKey(
@@ -309,3 +346,8 @@ class AdmissionFile(TimeStampModel):
     # def save(self):
     #     self.name = str(self.file).split('.')[0]
     #     super().save()
+
+
+    class Meta:
+        verbose_name = 'Fiche d\'admission'
+        verbose_name_plural = 'Fiches d\'admissions'

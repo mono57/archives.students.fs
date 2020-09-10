@@ -22,6 +22,24 @@ class StudentCreateView(
     success_url = reverse_lazy('home')
     success_message = 'Etudiant ajouté avec succès !'
 
+class StudentSearchListView(LoginRequiredMixin, ListView):
+    template_name = 'app/student-list.html'
+    model = Student
+    context_object_name = 'students'
+    
+    def get(self, request, *args, **kwargs):
+        self.query = request.GET.get('serial_number', None)
+        return super().get(request, *args, **kwargs)
+    
+    def get_queryset(self):
+        qs = super().get_queryset()
+        qs.filter(serial_number=self.query)
+        return qs
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['query'] = self.query
+        return context
 
 class StudentDetailView(LoginRequiredMixin, DetailView):
     template_name = 'app/student-detail.html'

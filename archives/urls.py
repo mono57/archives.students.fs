@@ -5,6 +5,10 @@ from django.conf import settings
 from django.conf.urls.static import static
 from archives.views import HomeTemplateView
 
+admin.site.site_header = "ARCHIVES FS UNIV-NDERE Admin"
+admin.site.site_title = "ARCHIVES FS UNIV-NDERE Portail"
+admin.site.index_title = "Bienvenue sur ARCHIVES FS UNIV-NDERE"
+
 urlpatterns = [
     path('', HomeTemplateView.as_view(), name='home'),
     path('app/', include('app.urls', namespace='app')),

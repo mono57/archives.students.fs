@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}
+  Recherche pour {{query}}
+{% endblock title %}
+
+{% block breadcrumbs %}
+{{ block.super }}
+  <li class="breadcrumb-item active">
+    Recherche pour {{query}}
+  </li>
+{% endblock breadcrumbs %}
+
+{% block content %}
+<section class="py-4">
+    <h4 class="mb-0">Résultats de récherches pour: <span class="text-primary">{{query}}</span></h4>
+    <hr class="mg-b-40">
+    <div class="row tx-14">
+      {% for student in students %}
+      <div class="col-sm-4 mb-4">
+        {% include "app/includes/single-folder.html" with item=student %}
+      </div>
+  
+      {% empty %}
+      <div class="col-12">
+        <h5 class="text-center text-primary">Aucun étudiant trouvé pour le matricule {{query}}</h5>
+      </div>
+      {% endfor %}
+  
+    </div>
+  </section>
+{% endblock content %}

@@ -29,7 +29,7 @@ App
 </div>
 
 <section class="py-4">
-  <h4 class="mb-0">Etudiants</h4>
+  <h4 class="mb-0">Les étudiants régulièrement inscris</h4>
   <hr class="mg-b-40">
   <div class="row tx-14">
     {% for student in recent_students %}
@@ -47,13 +47,13 @@ App
 </section>
 
 <section class="py-4">
-  <h4 class="mb-0">Procès verbal</h4>
+  <h4 class="mb-0">Tous les procès verbaux</h4>
   <hr class="mg-b-40 mt-0">
   <div class="row tx-14">
     {% for proces in verbal_proces %}
     <div class="col-sm-4 mb-4">
       <div class="card card-file">
-        <div class="dropdown-file">
+        <!-- <div class="dropdown-file">
           <a href="#" class="dropdown-link" data-toggle="dropdown"><i data-feather="more-vertical"></i></a>
           <div class="dropdown-menu dropdown-menu-right">
             <a href="#modalViewDetails" data-toggle="modal" class="dropdown-item details"><i data-feather="info"></i>
@@ -61,12 +61,13 @@ App
 
             <a href="#" class="dropdown-item delete"><i data-feather="trash"></i>Supprimer</a>
           </div>
-        </div><!-- dropdown -->
+        </div> -->
         <div class="card-file-thumb tx-danger">
           <i class="far fa-file"></i>
         </div>
         <div class="card-body">
-          <h6><a href="#">Procès verbal: {{proces.level}} | {{proces.academic_year}}</a></h6>
+          <h6 class="text-primary">Procès verbal: {{proces.level.full_name}}</h6>
+          <p>année académique: {{proces.academic_year}}</p>
           <!-- <span>Taille du fichier: </span> -->
         </div>
         <div class="card-footer"><span class="d-none d-sm-inline">Date d'ajout: </span><span

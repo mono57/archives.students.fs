@@ -5,6 +5,7 @@ from app.views import (
     StudentDetailView,
     DocumentCreateView,
     AdmissionFileCreateView,
+    StudentSearchListView,
     VerbalProcesCreateView
 )
 
@@ -35,6 +36,10 @@ urlpatterns = [
         AdmissionFileCreateView.as_view(),
         name='admission-form'
     ),
+    path(
+        'student/search/', 
+        StudentSearchListView.as_view(),
+        name='search'),
     path(
         'proces/',
         VerbalProcesCreateView.as_view(),
