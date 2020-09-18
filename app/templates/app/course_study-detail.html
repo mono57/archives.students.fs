@@ -1,6 +1,7 @@
 {% extends "base_site.html" %}
 
 {% load static %}
+{% load mathfilters %}
 
 {% block title %}
 {{title}}
@@ -34,7 +35,7 @@
                 <tr>
                     <td><a href="{{student.get_absolute_url}}">{{student.serial_number}}</a></td>
                     <td>{{student.get_full_name}}</td>
-                    <td>{{student.documents.count}}</td>
+                    <td>{{student.documents.count|add:student.admissions.count}}</td>
                 </tr>
                 {% endfor %}
                 

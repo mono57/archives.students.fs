@@ -47,6 +47,7 @@ INSTALLED_APPS = [
 
     'formtools',
     'crispy_forms',
+    'mathfilters',
 ]
 
 MIDDLEWARE = [
