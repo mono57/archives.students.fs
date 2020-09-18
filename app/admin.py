@@ -24,7 +24,7 @@ class StudentModelAdmin(admin.ModelAdmin):
 admin.site.register(Student, StudentModelAdmin)
 
 class LevelModelAdmin(admin.ModelAdmin):
-    list_display = ('full_name', 'short_name')
+    list_display = ('full_name',)
 
 admin.site.register(Level, LevelModelAdmin)
 
@@ -47,3 +47,4 @@ class DocumentModelAdmin(admin.ModelAdmin):
 
 admin.site.register(Document, DocumentModelAdmin)
 admin.site.register(Semester)
+admin.site.register(VerbalProces)

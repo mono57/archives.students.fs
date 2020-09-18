@@ -15,7 +15,7 @@
              <ul>
               <li class="nav-label">{{department.name}}</li>              
               {% for course in department.course_of_studies.all %}
-              <li class="nav-sub-item"><a href="#" class="nav-sub-link">{{course.name}}</a></li>
+              <li class="nav-sub-item"><a href="{{course.get_absolute_url}}" class="nav-sub-link">{{course.name}}</a></li>
                 
               {% endfor %}
             </ul>

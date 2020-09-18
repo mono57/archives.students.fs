@@ -1,0 +1,79 @@
+{% extends "base_site.html" %}
+
+{% block title %}
+  {{title}}
+{% endblock title %}
+
+{% block breadcrumbs %}
+  {{ block.super }}
+{% endblock breadcrumbs %}
+
+{% block extrastyle %}
+  <link rel="stylesheet" href="{% static 'css/datatables.min.css' %}">
+{% endblock extrastyle %}
+
+
+{% block content %}
+  
+    <div class="row mt-4">
+        <div class="col">
+            <table class="table">
+                <thead>
+                    <th>Matricule</th>
+                    <th>Nom(s) et Prenom(s)</th>
+                </thead>
+                <tbody>
+                    {% for student in students %}
+                    <tr>
+                        <td><a href="{{student.get_absolute_url}}">{{student.serial_number}}</a></td>
+                        <td>{{student.get_full_name}}</td>
+                    </tr>
+                    {% endfor %}
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock content %}
+
+
+{% block script %}
+  <script src="{% static 'js/datatables.min.js' %}"></script>
+{% endblock script %}
+
+{% block javascript %}
+$('#table').DataTable({
+    'language': {
+        "sEmptyTable":     "Aucune donnée disponible dans le tableau",
+        "sInfo":           "Affichage de l'élément _START_ à _END_ sur _TOTAL_ éléments",
+        "sInfoEmpty":      "Affichage de l'élément 0 à 0 sur 0 élément",
+        "sInfoFiltered":   "(filtré à partir de _MAX_ éléments au total)",
+        "sInfoPostFix":    "",
+        "sInfoThousands":  ",",
+        "sLengthMenu":     "Afficher _MENU_ éléments",
+        "sLoadingRecords": "Chargement...",
+        "sProcessing":     "Traitement...",
+        "sSearch":         "Rechercher :",
+        "sZeroRecords":    "Aucun élément correspondant trouvé",
+        "oPaginate": {
+            "sFirst":    "Premier",
+            "sLast":     "Dernier",
+            "sNext":     "Suivant",
+            "sPrevious": "Précédent"
+        },
+        "oAria": {
+            "sSortAscending":  ": activer pour trier la colonne par ordre croissant",
+            "sSortDescending": ": activer pour trier la colonne par ordre décroissant"
+        },
+        "select": {
+                "rows": {
+                    "_": "%d lignes sélectionnées",
+                    "0": "Aucune ligne sélectionnée",
+                    "1": "1 ligne sélectionnée"
+                } 
+        }
+    }
+});
+  
+{% endblock javascript %}

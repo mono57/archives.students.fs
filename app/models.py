@@ -24,53 +24,16 @@ class CommonModel(TimeStampModel):
 
 
 class Level(TimeStampModel):
-    full_name = models.CharField(max_length=150, verbose_name='Nom')
-    short_name = models.CharField(max_length=10, verbose_name='Abbréviation')
+    full_name = models.CharField(
+        max_length=150, verbose_name='Nom', help_text='Exemple: Niveau 1')
+    # short_name = models.CharField(max_length=10, verbose_name='Abbréviation')
 
     def __str__(self):
-        return self.short_name
+        return self.full_name
 
     class Meta:
         verbose_name = 'Niveau'
         verbose_name_plural = 'Niveaux'
-
-class Student(TimeStampModel):
-    uid = models.UUIDField(blank=True, default=uuid.uuid4())
-    first_name = models.CharField(max_length=200, verbose_name='Prénom(s)')
-    last_name = models.CharField(max_length=200, verbose_name='Nom(s)')
-    serial_number = models.CharField(max_length=10, verbose_name='Matricule')
-    date_of_birth = models.DateField(verbose_name='Date de naissance')
-    place_of_birth = models.CharField(
-        max_length=100, verbose_name='Lieu de naissance')
-    region_of_origin = models.CharField(
-        max_length=100, verbose_name='Region d\'origine')
-    father_name = models.CharField(
-        max_length=255, verbose_name='Nom(s) du père')
-    mother_name = models.CharField(
-        max_length=255, verbose_name='Nom(s) de la mère')
-    gender = models.CharField(max_length=10, verbose_name='Sexe', default='male', choices=(
-        ('female', 'Feminin'), ('male', 'Masculin')))
-    nationality = models.CharField(
-        max_length=50,
-        verbose_name='Nationnalité'
-    )
-
-    objects = StudentManager()
-
-    def get_full_name(self):
-        return '{} {}'.format(self.last_name, self.first_name)
-
-    def get_absolute_url(self):
-        return reverse("app:student-detail", kwargs={"uid": self.uid})
-
-    def __str__(self):
-        return self.first_name + ' ' + self.last_name
-
-
-    class Meta:
-        verbose_name = 'Etudiant'
-        verbose_name_plural = 'Etudiants'
-        
 
 
 class Department(CommonModel):
@@ -88,15 +51,87 @@ class CourseOfStudy(CommonModel):
         on_delete=models.CASCADE,
         related_name='course_of_studies'
     )
-    student = models.ManyToManyField(
-        Student,
-        blank=True,
-        related_name='courses_of_studies',
-        verbose_name='Etudiants'
-    )
+    # student = models.ManyToManyField(
+    #     Student,
+    #     blank=True,
+    #     related_name='courses_of_studies',
+    #     verbose_name='Etudiants'
+    # )
+
+    def get_absolute_url(self):
+        return reverse('app:course-detail', kwargs={'pk': self.pk})
+
     class Meta:
         verbose_name = 'Parcours'
         verbose_name_plural = 'Parcours'
+
+
+class VerbalProces(TimeStampModel):
+    level = models.ForeignKey(
+        Level, on_delete=models.CASCADE, verbose_name='Niveau')
+    academic_year = models.CharField(
+        max_length=20, verbose_name='Année académique', help_text='2015/2016')
+
+    file = models.FileField(
+        verbose_name='Fichier procès verbal', upload_to='proces/')
+
+    student_list = models.FileField(
+        verbose_name='Fichier étudiants',blank=True, null=True, upload_to='students/')
+
+    def __str__(self):
+        return '{} - {}'.format(self.level, self.academic_year)
+
+    class Meta:
+        verbose_name = 'Procès verbal'
+        verbose_name_plural = 'Procès verbaux'
+
+
+class Student(TimeStampModel):
+    uid = models.UUIDField(blank=True, default=uuid.uuid4())
+    first_name = models.CharField(
+        max_length=200, blank=True, verbose_name='Prénom(s)')
+    last_name = models.CharField(max_length=200, verbose_name='Nom(s)')
+    serial_number = models.CharField(max_length=10, verbose_name='Matricule')
+    date_of_birth = models.DateField(verbose_name='Date de naissance')
+    place_of_birth = models.CharField(
+        max_length=100, verbose_name='Lieu de naissance')
+    region_of_origin = models.CharField(
+        max_length=100, blank=True, verbose_name='Region d\'origine')
+    father_name = models.CharField(
+        max_length=255, verbose_name='Nom(s) du père')
+    mother_name = models.CharField(
+        max_length=255, verbose_name='Nom(s) de la mère')
+    gender = models.CharField(max_length=10, verbose_name='Sexe', default='male', choices=(
+        ('female', 'Feminin'), ('male', 'Masculin')))
+    nationality = models.CharField(
+        max_length=50,
+        verbose_name='Nationnalité'
+    )
+    handicap = models.BooleanField(
+        verbose_name='Êtes vous handicapé ?', default=False)
+    refugee = models.BooleanField(
+        verbose_name='Êtes vous un réfugié ?', default=False)
+
+    course_of_study = models.ForeignKey(
+        CourseOfStudy, on_delete=models.CASCADE, blank=True, null=True, related_name='students')
+
+    verbal_proces = models.ManyToManyField(
+        VerbalProces, blank=True, verbose_name='Procès verbal', related_name='students')
+
+    objects = StudentManager()
+
+    def get_full_name(self):
+        return '{} {}'.format(self.last_name, self.first_name)
+
+    def get_absolute_url(self):
+        return reverse("app:student-detail", kwargs={"uid": self.uid})
+
+    def __str__(self):
+        return self.first_name + ' ' + self.last_name
+
+    class Meta:
+        verbose_name = 'Etudiant'
+        verbose_name_plural = 'Etudiants'
 
 
 class Speciality(CommonModel):
@@ -207,6 +242,7 @@ class Folder(TimeStampModel):
         verbose_name = 'Dossier étudiant'
         verbose_name_plural = 'Dossiers étudiant'
 
+
 class Semester(TimeStampModel):
     number = models.IntegerField(
         verbose_name='Numero de semestre'
@@ -229,6 +265,7 @@ class DocumentType(TimeStampModel):
     class Meta:
         verbose_name = 'Type du document'
         verbose_name_plural = 'Types du document'
+
 
 class Document(TimeStampModel):
     type = models.ForeignKey(
@@ -264,10 +301,10 @@ class Document(TimeStampModel):
         self.file_name = str(self.file).split('.')[0]
         super().save()
 
-
     class Meta:
         verbose_name = 'Document'
         verbose_name_plural = 'Documents'
+
 
 class DocumentFile(TimeStampModel):
     file = models.FileField(upload_to='documents/', verbose_name='fichier')
@@ -299,28 +336,30 @@ class DocumentFile(TimeStampModel):
 #     start_date = models.CharField()
 
 
-class VerbalProces(TimeStampModel):
-    level = models.ForeignKey(
-        Level, on_delete=models.CASCADE, verbose_name='Niveau')
-    academic_year = models.CharField(
-        max_length=20, verbose_name='Année académique', help_text='2015/2016')
-
-    file = models.FileField(verbose_name='Fichier procès verbal', upload_to='proces/')
-
-    def __str__(self):
-        return '{} - {}'.format(self.level, self.academic_year)
-
-    class Meta:
-        verbose_name = 'Procès verbal'
-        verbose_name_plural = 'Procès verbaux'
-
-
 class AdmissionFile(TimeStampModel):
+    department = models.ForeignKey(
+        Department,
+        on_delete=models.CASCADE,
+        verbose_name='Departement'
+    )
+    course_of_study = models.ForeignKey(
+        CourseOfStudy,
+        on_delete=models.CASCADE,
+        verbose_name='Parcours',
+        related_name='course_admissions'
+    )
     level = models.ForeignKey(
         Level,
         on_delete=models.CASCADE,
         verbose_name='Niveau d\'étude'
     )
+    # speciality = models.ForeignKey(
+    #     Speciality,
+    #     blank=True,
+    #     on_delete=models.CASCADE,
+    #     verbose_name='Spécialité',
+    #     related_name='speciality_admissions'
+    # )
     student = models.ForeignKey(
         Student,
         on_delete=models.CASCADE,
@@ -346,7 +385,6 @@ class AdmissionFile(TimeStampModel):
     # def save(self):
     #     self.name = str(self.file).split('.')[0]
     #     super().save()
-
 
     class Meta:
         verbose_name = 'Fiche d\'admission'

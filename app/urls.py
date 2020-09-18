@@ -1,13 +1,6 @@
 from django.urls import path
 from django.views.generic import TemplateView
-from app.views import (
-    StudentCreateView,
-    StudentDetailView,
-    DocumentCreateView,
-    AdmissionFileCreateView,
-    StudentSearchListView,
-    VerbalProcesCreateView
-)
+from app.views import *
 
 app_name = 'app'
 
@@ -27,7 +20,7 @@ urlpatterns = [
         name='student-detail'
     ),
     path(
-        'student/<str:uid>/document/add/', 
+        'student/<str:uid>/document/add/',
         DocumentCreateView.as_view(),
         name='document-create'
     ),
@@ -37,13 +30,15 @@ urlpatterns = [
         name='admission-form'
     ),
     path(
-        'student/search/', 
+        'student/search/',
         StudentSearchListView.as_view(),
         name='search'),
     path(
         'proces/',
         VerbalProcesCreateView.as_view(),
         name='proces'
-    )
-    
+    ),
+    path('department/<int:pk>/students/',
+         CourseStudyDetail.as_view(), name='course-detail'),
+
 ]

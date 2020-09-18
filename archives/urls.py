@@ -5,9 +5,9 @@ from django.conf import settings
 from django.conf.urls.static import static
 from archives.views import HomeTemplateView
 
-admin.site.site_header = "ARCHIVES FS UNIV-NDERE Admin"
-admin.site.site_title = "ARCHIVES FS UNIV-NDERE Portail"
-admin.site.index_title = "Bienvenue sur ARCHIVES FS UNIV-NDERE"
+admin.site.site_header = "SGCA-FS Admin"
+admin.site.site_title = "SGCA-FS Portail"
+admin.site.index_title = "Bienvenue sur SGCA-FS"
 
 urlpatterns = [
     path('', HomeTemplateView.as_view(), name='home'),

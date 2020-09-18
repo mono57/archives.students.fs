@@ -42,16 +42,21 @@
               </div>
             </div>
             <div class="form-row">
-              <div class="form-group mb-0 col-md-6">
-                {{form.region_of_origin|as_crispy_field}}
-              </div>
+              
               <div class="form-group mb-0 col-md-6">
                 {{form.gender|as_crispy_field}}
               </div>
             </div>
             <div class="form-row">
-              <div class="form-group mb-0 col">
-                {{form.nationality|as_crispy_field}}
+              <div class="form-group col col-md-6">
+                <label for="">{{form.nationality.label}}*</label>
+                <select name="nationality" id="nationality" class="form-control">
+                  {% include "includes/countrydropdown.html" %}
+                </select>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="id_region_of_origin">Région d'origine*</label>
+                {% include "includes/regions.html" %}
               </div>
             </div>
             <div class="form-row">
@@ -62,9 +67,38 @@
                 {{form.mother_name|as_crispy_field}}
               </div>
             </div>
+            <div class="form-row">
+              <div class="form-group mb-0 col-md-6">
+                {{form.handicap|as_crispy_field}}
+              </div>
+              <div class="form-group mb-0 col-md-6">
+                {{form.refugee|as_crispy_field}}
+              </div>
+            </div>
       
             <button class="btn btn-primary btn-sm">Enregister l'étudiant</button>
         </form>
     </div>
   </div>
 {% endblock content %}
+
+{% block javascript %}
+  var country = "Cameroon"
+
+  function process_selectedcountry(from) {
+    var selectedCountry = $(from).children("option:selected").val();
+    if(selectedCountry == country){
+      $('#id_regions').removeAttr('disabled');
+    }else{
+      $('#id_regions').attr('disabled', 'disabled');
+    }
+  }
+
+  process_selectedcountry('#nationality');
+
+  <!-- $('#id_regions').attr('disabled', 'disabled'); -->
+  $('#nationality').change(function(){
+    process_selectedcountry(this);
+  })
+
+{% endblock javascript %}

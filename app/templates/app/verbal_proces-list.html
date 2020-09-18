@@ -1,0 +1,40 @@
+{% extends "base_site.html" %}
+
+{% block title %}
+  {{title}}
+{% endblock title %}
+
+{% block breadcrumbs %}
+{{ block.super }}
+<li class="breadcrumb-item active">
+    {{title}}
+  </li>
+{% endblock breadcrumbs %}
+
+{% block content %}
+  
+    <div class="row mt-4">
+        <div class="col">
+            <table id="table" class="table">
+                <thead>
+                    <tr>
+                        <th>Niveau</th>
+                        <th>Année académique</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for proces in verbal_process %}
+                    <tr>
+                        <td>{{proces.level}}</td>
+                        <td>{{proces.academic_year}}</td>
+                        <td><a href="">Ajouter des étudiants</a></td>
+                    </tr>
+                    {% endfor %}
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock content %}

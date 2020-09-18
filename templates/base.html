@@ -16,6 +16,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto:wght@500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{% static 'lib/fortawesome/css/all.min.css' %}">
 
+  {% block extrastyle %}
+    
+  {% endblock extrastyle %}
 
   <link rel="stylesheet" href="{% static 'css/dashforge.filemgr.css' %}">
   <link rel="stylesheet" href="{% static 'css/dashforge.css' %}">
@@ -79,6 +82,17 @@
   <script src="{% static 'js/dashforge.filemgr.js' %}"></script>
   <script src="{% static 'js/dashforge.js' %}"></script>
 
+
+  {% block script %}
+
+  {% endblock script %}
+  <script>
+    $(document).ready(function(){
+  {% block javascript %}
+
+  {% endblock javascript %}
+  });
+  </script>
 </body>
 
 </html>
