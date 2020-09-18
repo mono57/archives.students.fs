@@ -22,9 +22,9 @@ class StudentModelForm(forms.ModelForm):
         model = Student
         # fields = '__all__'
         exclude = ('uid',)
-        widgets = {
-            'date_of_birth': CustomDateInput()
-        }
+        # widgets = {
+        #     'date_of_birth': CustomDateInput()
+        # }
 
     def clean_serial_number(self):
         serial = self.cleaned_data.get('serial_number')

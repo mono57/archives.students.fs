@@ -92,7 +92,7 @@ class Student(TimeStampModel):
         max_length=200, blank=True, verbose_name='Prénom(s)')
     last_name = models.CharField(max_length=200, verbose_name='Nom(s)')
     serial_number = models.CharField(max_length=10, verbose_name='Matricule')
-    date_of_birth = models.DateField(verbose_name='Date de naissance')
+    date_of_birth = models.CharField(max_length=20, verbose_name='Date de naissance', help_text='Format: jj/mm/annee')
     place_of_birth = models.CharField(
         max_length=100, verbose_name='Lieu de naissance')
     region_of_origin = models.CharField(

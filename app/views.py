@@ -36,9 +36,8 @@ class StudentSearchListView(LoginRequiredMixin, ListView):
         return super().get(request, *args, **kwargs)
 
     def get_queryset(self):
-        qs = super().get_queryset()
-        qs.filter(serial_number=self.query)
-        return qs
+        qs = super().get_queryset()        
+        return qs.filter(serial_number__iexact=self.query)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
